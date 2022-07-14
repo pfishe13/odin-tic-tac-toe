@@ -16,5 +16,12 @@ body {
 }
 
 .game-slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
+}
+
+.mark {
+  height: 10vh;
 }
