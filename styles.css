@@ -1,27 +1,104 @@
+* {
+  font-family: "Chakra Petch", sans-serif;
+}
+
 body {
+  background-color: #f5f6f7;
   height: 100vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 8em;
+  font-weight: 500;
+  margin: 0;
+}
+
+.introduction {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 #game-board {
+  display: none;
   background-color: black;
   height: 500px;
   width: 500px;
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 20px;
+}
+
+#get-player-info > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  text-align: center;
+  font-size: 26px;
+  margin: 2em 3em;
 }
 
 .game-slot {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #f5f6f7;
 }
 
 .mark {
   height: 10vh;
+}
+
+/*  */
+/* CSS */
+.button {
+  background-color: #3dd1e7;
+  border: 0 solid #e5e7eb;
+  box-sizing: border-box;
+  color: #000000;
+  display: flex;
+  font-size: 3em;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1.75rem;
+  padding: 1rem 1.65rem;
+  margin-top: 22px;
+  position: relative;
+  text-align: center;
+  text-decoration: none #000000 solid;
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  cursor: pointer;
+  transform: rotate(-2deg);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button:after {
+  content: "";
+  position: absolute;
+  border: 1px solid #000000;
+  bottom: 4px;
+  left: 4px;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+}
+
+.button:hover:after {
+  bottom: 2px;
+  left: 2px;
 }
