@@ -17,6 +17,15 @@ h1 {
   margin: 0;
 }
 
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 2em;
+  text-align: center;
+}
+
 .introduction {
   display: flex;
   flex-direction: column;
@@ -24,8 +33,15 @@ h1 {
   align-items: center;
 }
 
-#game-board {
+.game-screen {
+  width: 80%;
   display: none;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#game-board {
+  display: grid;
   background-color: black;
   height: 500px;
   width: 500px;
@@ -55,6 +71,15 @@ input {
 
 .mark {
   height: 10vh;
+}
+
+.player1,
+.player2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 320px;
+  width: 150px;
 }
 
 /*  */

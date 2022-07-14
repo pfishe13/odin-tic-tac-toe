@@ -9,9 +9,10 @@ const Gameboard = (() => {
         playCount = 0;
         gameArray = [];
         winnerPlayer = null;
-        const gameboardDiv = document.querySelector('#game-board');
-        gameboardDiv.style.display = "grid";
+        const gameScreen = document.querySelector('.game-screen');
+        gameScreen.style.display = "flex";
 
+        const gameboardDiv = document.querySelector('#game-board');
         for(let i = 0; i < 9; i++) {
             const gameSlot = document.createElement('div');
             gameSlot.classList.add("game-slot");
@@ -20,19 +21,56 @@ const Gameboard = (() => {
             gameSlot.addEventListener('click', gameTurn);
         }
 
+        const playerHeaders = document.querySelectorAll('h3');
+        playerHeaders[1].textContent = `${player1.getName()}`;
+        playerHeaders[2].textContent = `${player2.getName()}`;
+
+        displayWhoseTurn();
+
         const introDiv = document.querySelector('.introduction');
         introDiv.style.display = "none";
         // console.log(`Game Has Started with ${ player1.getName() } and ${ player2.getName() }`);
     }
 
+    const randomMessage = () => {
+        const num = Math.floor(Math.random() * 4); // random number from 0 to 3
+        if (num === 0) return "Waiting on you!";
+        if (num === 1) return "It's your turn.";
+        if (num === 2) return "Slow poke...";
+        if (num === 3) return "You're up!";
+    }
+
+    const displayWhoseTurn = (player) => {
+        const currentText = document.createElement('h2');
+        currentText.textContent = randomMessage();
+
+        if (playCount % 2 !== 0) {
+            const notPlayerTurn = document.querySelector(".player1");
+            const header = notPlayerTurn.querySelector("h2");
+            header.remove();
+
+            const playerTurn = document.querySelector(".player2");
+            playerTurn.appendChild(currentText);
+        } else {
+            const notPlayerTurn = document.querySelector(".player2");
+            const header = notPlayerTurn.querySelector("h2");
+            if (header !== null) header.remove();
+
+            const playerTurn = document.querySelector(".player1");
+            playerTurn.appendChild(currentText);
+        }
+
+    }
+
     const addToArray = (gameboardSlot, index) => {
-        // const gameboardSlot = document.getElementById(index);
-        if (playCount % 2 === 0) {
+        if (playCount % 2 !== 0) {
             gameArray[index] = player1.getName();
             gameboardSlot.innerHTML = `<img class="mark" src = "/circle-outline-svgrepo-com.svg" alt="O"/>`
+            displayWhoseTurn();
         } else {
             gameArray[index] = player2.getName();
-            gameboardSlot.innerHTML = `<img class="mark" src = "/x-svgrepo-com.svg" alt="X"/>`
+            gameboardSlot.innerHTML = `<img class="mark" src = "/x-svgrepo-com.svg" alt="X"/>`;
+            displayWhoseTurn();
         }
         gameboardSlot.classList.add('clicked');
     }
@@ -41,9 +79,8 @@ const Gameboard = (() => {
         const index = e.srcElement.id;
         const gameboardSlot = document.getElementById(index);
         if (gameboardSlot !== null) {
-            addToArray(gameboardSlot, index);
-
             playCount++;
+            addToArray(gameboardSlot, index);
             if (playCount >= 9) 
                 endGame();
 
@@ -84,22 +121,24 @@ const Gameboard = (() => {
             winnerPlayer = findWinner(gameArray[2]);
         }
 
-        if ((winnerPlayer) || (playCount > 8)) endGame();
+        if ((winnerPlayer) || (playCount > 8)) {
+            endGame();
+        }
 
     }
 
-    // const outputArray = () => {
-    //     for(let i = 0; i < gameArray.length; i++) {
-    //         console.log(`${gameArray[i]} at Index ${i}`);
-    //     }
-    // }
-
     const clearBoard = () => {
-        const board = document.getElementById('game-board');
+        const board = document.querySelector('.game-screen');
         board.style.display = "none";
 
-        while(board.firstChild) {
-            board.removeChild(board.firstChild);
+        const notPlayerTurn = document.querySelectorAll("h2");
+        for (let i = 0; i < notPlayerTurn.length; i++) {
+            notPlayerTurn[i].remove();
+        }
+
+        const gameboard = board.querySelector('#game-board');
+        while(gameboard.firstChild) {
+            gameboard.removeChild(gameboard.firstChild);
         }
     }
 
@@ -116,6 +155,7 @@ const Gameboard = (() => {
     }
 
     const endGame = () => {
+
         showIntro();
         clearBoard();
     }
@@ -144,7 +184,7 @@ const GameController = (() => {
         });
     }
 
-    return { initialize }
+    return { initialize };
 
 })();
 
